@@ -1,9 +1,62 @@
 ﻿@page "/"
+@implements IDisposable
+@using Toolbelt.Blazor.HotKeys
+@inject HotKeys HotKeys
+@using System;
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h3>Blazor.HotKeys minimal reproduction</h3>
 
-Welcome to your new app.
+<p>On a mac, all keys work except option</p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div class="card m-2">
+    <b class="m-2">@CurrentShortcut;</b>
+    <ul class="m-2">
+        @foreach (var item in HotKeysContext?.Keys)
+        {
+            <li>@item</li>
+        }
+    </ul>
+</div>
+
+
+@code {
+    HotKeysContext HotKeysContext;
+
+    public string CurrentShortcut { get; set; } = "None";
+
+    protected override void OnInitialized()
+    {
+        HotKeysContext = HotKeys.CreateContext()
+        .Add(ModKeys.Ctrl, Keys.A, () =>
+        {
+            Console.WriteLine("Pressing Ctrl + A");
+            CurrentShortcut = "Ctrl + A";
+            StateHasChanged();
+        }, "Look in console")
+        .Add(ModKeys.Alt, Keys.A, () =>
+        {
+            Console.WriteLine("Pressing Alt/Option + A");
+            CurrentShortcut = "Alt/Option + A";
+            StateHasChanged();
+        }, "Look in console")
+        .Add(ModKeys.Meta, Keys.A, () =>
+        {
+            Console.WriteLine("Pressing Meta + A");
+            CurrentShortcut = "Meta + A";
+            StateHasChanged();
+        }, "Look in console")
+        .Add(ModKeys.Shift, Keys.A, () =>
+        {
+            Console.WriteLine("Pressing Shift + A");
+            CurrentShortcut = "Shift + A";
+            StateHasChanged();
+        }, "Look in console");
+    }
+
+    public void Dispose()
+    {
+        this.HotKeysContext?.Dispose();
+    }
+}
