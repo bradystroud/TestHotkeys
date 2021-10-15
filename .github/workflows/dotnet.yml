@@ -14,7 +14,7 @@ jobs:
         - name: Setup .NET Core SDK
           uses: actions/setup-dotnet@v1
           with:
-            dotnet-version: 6.0.0
+            dotnet-version: 6.0.0-rc.1.21451.13
         - name: Publish .NET Core Project
           run: dotnet publish TestHotkeys.csproj -c Release -o release --nologo
         - name: Commit wwwroot to GitHub Pages
