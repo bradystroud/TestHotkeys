@@ -28,31 +28,41 @@
 
     protected override void OnInitialized()
     {
+        HotKeys.KeyDown += OnKeyDown;
         HotKeysContext = HotKeys.CreateContext()
         .Add(ModKeys.Ctrl, Keys.A, () =>
         {
-            Console.WriteLine("Pressing Ctrl + A");
+            // Console.WriteLine("Pressing Ctrl + A");
             CurrentShortcut = "Ctrl + A";
             StateHasChanged();
         }, "Look in console")
         .Add(ModKeys.Alt, Keys.A, () =>
         {
-            Console.WriteLine("Pressing Alt/Option + A");
+            // Console.WriteLine("Pressing Alt/Option + A");
             CurrentShortcut = "Alt/Option + A";
             StateHasChanged();
         }, "Look in console")
         .Add(ModKeys.Meta, Keys.A, () =>
         {
-            Console.WriteLine("Pressing Meta + A");
+            // Console.WriteLine("Pressing Meta + A");
             CurrentShortcut = "Meta + A";
             StateHasChanged();
         }, "Look in console")
         .Add(ModKeys.Shift, Keys.A, () =>
         {
-            Console.WriteLine("Pressing Shift + A");
+            // Console.WriteLine("Pressing Shift + A");
             CurrentShortcut = "Shift + A";
             StateHasChanged();
         }, "Look in console");
+    }
+
+    private void OnKeyDown(object sender, HotKeyDownEventArgs e) {
+        Console.WriteLine(e.NativeKey);
+        Console.WriteLine(e.NativeCode);
+        if (e.NativeKey == "Alt")
+        {
+            
+        }
     }
 
     public void Dispose()
