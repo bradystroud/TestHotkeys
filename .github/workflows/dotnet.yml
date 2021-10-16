@@ -20,6 +20,10 @@ jobs:
           run: dotnet publish TestHotkeys.csproj -c Release -o release --nologo
         - name: copy index.html to 404.html
           run: cp release/wwwroot/index.html release/wwwroot/404.html
+        - name: Add CNAME file
+          run: |
+            touch CNAME
+            echo "hotkeys.bradystroud.dev" > CNAME
         - name: Add .nojekyll file
           run: touch release/wwwroot/.nojekyll
         - name: Commit wwwroot to GitHub Pages
